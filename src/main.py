@@ -3,9 +3,7 @@
 import os
 import overpy
 import uvicorn
-from typing import List
 from fastapi import FastAPI
-from uvicorn import Config, Server
         
 class GeoData:
 
@@ -27,9 +25,9 @@ class GeoData:
 
 app = FastAPI()
 
-@app.get('/')
-def read_root():
-    return {'Welcome to GeoData'}
+@app.get("/")
+def test():
+    return {"Welcome to GeoData"}
 
 @app.get("/data/")
 def fetchDataByBounds(bounds: str):
