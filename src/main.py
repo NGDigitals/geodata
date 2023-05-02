@@ -27,6 +27,10 @@ class GeoData:
 
 app = FastAPI()
 
+@app.get('/')
+def read_root():
+    return {'Welcome to GeoData'}
+
 @app.get("/data/")
 def fetchDataByBounds(bounds: str):
     geodata = GeoData();
