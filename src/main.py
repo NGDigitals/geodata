@@ -13,12 +13,20 @@ class GeoData:
     def loadByBounds(self, bounds=""):
         self.api = overpy.Overpass()
         result = self.api.query(f"""
-                                node(poly:"{bounds}");
-                                out body;
+                                way(poly:"{bounds}");
+                                way._[building];
+                                (._;>;);
+                                out body; 
                                 """)
+        # result = self.api.query(f"""
+        #                         node(poly:"{bounds}");
+        #                         out body;
+        #                         """)
         data = []
-        for node in result.nodes:
-            location = dict(name = node.tags.get("name", "n/a"), lat = "%f" % (node.lat), lng = "%f" % (node.lon))
+        latlng = bounds.split(" ", 2)
+        for way in result.ways:
+            # location = dict(name = node.tags.get("name", "n/a"), lat = "%f" % (node.lat), lng = "%f" % (node.lon))
+            location = dict(name = way.tags.get("name", "n/a"), lat = "%f" % float(latlng[0]), lng = "%f" % float(latlng[1]))
             data.append(location)
         return data
 
@@ -33,7 +41,7 @@ def test():
 def fetchDataByBounds(bounds: str):
     geodata = GeoData();
     result = geodata.loadByBounds(bounds)
-    return {"result": result}
+    return len(result)
 
 
 if __name__ == "__main__":
