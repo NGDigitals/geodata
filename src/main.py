@@ -41,7 +41,7 @@ def test():
 def fetchDataByBounds(bounds: str):
     geodata = GeoData();
     result = geodata.loadByBounds(bounds)
-    return len(result)
+    return result
 
 
 if __name__ == "__main__":
